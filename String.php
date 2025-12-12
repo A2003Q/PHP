@@ -118,9 +118,9 @@ echo $nextletter ;
 
 $Original_String="The brown fox";
 $pos=4;
-$updated_string=strstr($Original_String,0,$pos-1);
-$updated_string+="quick ";
-$updated_string+=strstr($Original_String,$pos,strlen($Original_String)-1);
+$before = substr($Original_String, 0, $pos );
+$after = substr($Original_String, $pos);
+$updated_string = $before . "quick " . $after;
 echo $updated_string;
 
 
