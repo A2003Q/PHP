@@ -123,6 +123,7 @@ $after = substr($Original_String, $pos);
 $updated_string = $before . "quick " . $after;
 echo $updated_string;
 
+<<<<<<< HEAD
 // 13
 $num ='0000657022.24';
 function removeZeroes($n){
@@ -208,6 +209,9 @@ for ($x = ord('a'); $x <= ord('z'); $x++) {
     //ord('a'): This function returns the ASCII 
     echo chr($x);
 }
+=======
+
+>>>>>>> 2e50a51eb3a4f478ecc2735eb0733248fc7f4a80
 
 
 
