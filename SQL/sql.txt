@@ -1,0 +1,140 @@
+//Task1 -->
+CREATE TABLE Customers(
+    customer_id INT(100) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+    );
+    CREATE TABLE Orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_date DATE NOT NULL,
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Order_Product (
+    order_id INT,
+    product_id INT,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+-----------------------------------------------------------------------
+// Task3(Challange) -->
+ *Primary Key : unique ,one per table ,cannot be null .
+ *unique : unique , can used more than once in table ,can be null .
+
+-----------------------------------------------------------------------
+// Task & Exercise (2) --->
+ *Task 2 : 
+ -Partial dependency:
+Non-key column depends on only part of a composite key
+
+ -Transitive dependency:
+Non-key column depends on another non-key column
+
+------------------------------------------------------------------------
+// Task & Exercise (3)
+  *CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    birth_date DATE
+);
+INSERT INTO students (name, email, birth_date) VALUES
+('Aisha Mohammad', 'aishaqarout2003@gmail.com', '2003-30-12'),
+('aisha', 'a@gmail.com', '2003-03-31'),
+('Sara ', 'sara@gmail.com', '2000-5-20');
+
+SELECT *
+FROM students
+WHERE birth_date > '2003-30-12'
+ORDER BY name;
+
+UPDATE students
+SET email = 'aa@gmail.com'
+WHERE id = 1;
+
+DELETE FROM students
+WHERE id = 3
+-----------------------------------------------------------------------
+task(4):
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    city VARCHAR(50)
+);
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    amount DECIMAL(8,2),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+CREATE TABLE newsletter_subscribers (
+    email VARCHAR(50)
+);
+INSERT INTO users (name, city) VALUES
+('aisha', 'Amman'),
+('Sara', 'Amman'),
+('reham', 'Amman'),
+('batool', 'Amman'),
+('ahmad', 'Amman'),
+('adam', 'Amman'),
+
+
+INSERT INTO orders (user_id, amount) VALUES
+(1, 200),
+(1, 300),
+(2, 450),
+
+INSERT INTO newsletter_subscribers VALUES
+('a@gmail.com'),
+('s@gmail.com');
+
+SELECT city, COUNT(*) AS user_count
+FROM users
+
+GROUP BY city
+HAVING COUNT(*) > 6;
+
+SELECT u.*
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+WHERE o.order_id IS NULL;
+
+SELECT user_id, AVG(amount) AS avg_order_amount
+FROM orders
+GROUP BY user_id;
+
+SELECT u.name, SUM(o.amount) AS total_spent
+FROM users u
+JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.user_id
+HAVING SUM(o.amount) > (
+    SELECT AVG(amount) FROM orders
+);
+SELECT name AS contact
+FROM users
+UNION
+SELECT email
+FROM newsletter_subscribers; 
+----------------------------------------
+task(5):
+Data: These are facts or values ​​without clear meaning.
+For example: 2003 Aisha, Amman
+(This data is not processed.)
+
+Information: When we process and organize data, it becomes understandable. For example: Aisha's born year is 2003.
+database:It is an organized place where we store data in an orderly manner and create relationships between this data.
+DBMS:It is a program or system that manages and controls this data and performs operations on it such as creating, deleting, modifying, and establishing relationships, such as MySQL, Oracle, and SQL Server.
+RDBMS:It is a type of database management system (DBMS) that stores data in tables, and each table is linked to the other through relationships (such as keys).
+---------------------------------------------------------------------------------
+task(7):
+The shoes store has a database for all its products: name, size, color, price, and quantity.
+When they sell an item, the system updates the quantity and stores the sale date.
+The database also helps them identify their best-selling products and quickly place new orders.
